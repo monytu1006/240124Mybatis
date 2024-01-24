@@ -1,0 +1,88 @@
+package com.example.demo.controller;
+
+import java.util.List;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import com.example.demo.domain.BoardVO;
+import com.example.demo.service.BoardService;
+
+import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.RequestBody;
+
+
+
+@RequestMapping("/board/*")
+@Controller
+@RequiredArgsConstructor
+public class BoardController {
+	
+	private final Logger log = LoggerFactory.getLogger(BoardController.class);
+	@Autowired
+	private final BoardService bsv;
+//	private BoardService bsv;
+	
+	
+	@GetMapping("/register")
+	public void register() {}
+	
+	@PostMapping("/register")
+	public String register(BoardVO bvo) {
+		
+		int isOk = bsv.insert(bvo);
+		log.info(">>> board register is >>> "+(isOk>0?"OK":"Fail"));
+		
+		return "index";
+	}
+	
+	@GetMapping("/list")
+	public void list(Model m) {
+		
+		List<BoardVO> list = bsv.getlist();
+		
+		m.addAttribute("list", list);
+	}
+		
+	@GetMapping({"/detail", "/modify"})
+	public void detail(Model m, @RequestParam("bno") long bno) {
+		log.info(">>>> bno >>"+bno);
+		
+		m.addAttribute("bvo", bsv.getDetail(bno));
+
+	}
+	
+	@PostMapping("/modify")
+	public String modify(BoardVO bvo) {
+		log.info(">>> bvo >>> {}"+bvo);
+		
+		//update
+		int isOk = bsv.modify(bvo);
+		log.info("modify is "+ ((isOk>0)? "OK": "Fail"));
+		return "redirect:/board/list";
+		
+	}
+	
+	  @GetMapping("/delete")
+		public String remove(@RequestParam("bno") long bno, RedirectAttributes re) {
+			log.info(">>> bno >> {} "+bno);
+			int isOk = bsv.delete(bno);
+
+			re.addFlashAttribute("isDel", isOk);
+			return "redirect:/board/list";
+		}
+	
+	
+		
+		
+
+}

@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<th:block th:replace="~{/layout::setFragment(~{this::content})}">
+   <th:block th:fragment="content">
+      
+   
+   <div class="mt-4 p-5 bg-light text-black rounded text-center text-center" style="margin-bottom:0">
+  <p>Spring Boot makes it easy to create stand-alone,
+    production-grade Spring based Applications that you can "just run".</p>
+</div>
+   
+   </th:block>
+
+
+</th:block>

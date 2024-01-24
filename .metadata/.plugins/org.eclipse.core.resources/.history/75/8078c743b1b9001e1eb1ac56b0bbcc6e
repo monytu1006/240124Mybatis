@@ -1,0 +1,21 @@
+package com.example.demo.domain;
+
+public class BoardVO {
+//	create table board(
+//			bno bigint auto_increment,
+//			title varchar(200) not null,
+//			writer varchar(200) not null,
+//			content text not null,
+//			reg_at datetime default now(),
+//			mod_at datetime default now(),
+//			primary key(bno)
+//			);
+	
+	private long bno;
+	private String title;
+	private String writer;
+	private String content ;
+	private String regAt;
+	private String modAt;
+	
+}

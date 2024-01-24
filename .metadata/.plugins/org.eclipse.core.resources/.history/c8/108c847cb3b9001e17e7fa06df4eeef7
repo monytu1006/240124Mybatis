@@ -1,0 +1,9 @@
+@Slf4j
+@RequestMapping("/board/*")
+@Controller
+public class BoardController {
+	
+	@Autowired
+	private BoardService bsv;
+
+}
